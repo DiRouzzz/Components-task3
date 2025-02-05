@@ -12,7 +12,7 @@ function App() {
 	const onClickNum = event => {
 		const num = event.target.textContent;
 
-		if (operator === '') {
+		if (!operator) {
 			setOperand1(prevNum => prevNum + num);
 		} else {
 			setOperand2(prevNum => prevNum + num);
@@ -22,7 +22,7 @@ function App() {
 	const onClickOperator = event => {
 		setResult('');
 		const oper = event.target.textContent;
-		if (operator === '') {
+		if (!operator) {
 			setOperator(oper);
 		}
 	};
@@ -36,11 +36,11 @@ function App() {
 
 	const onClickResult = () => {
 		let res = 0;
-		if (operand1 !== '' && operand2 === '') {
+		if (operand1 && !operand2) {
 			setOperator('');
-			return operand1;
+			return;
 		}
-		if (operand1 !== '' && operand2 !== '') {
+		if (operand1 && operand2) {
 			switch (operator) {
 				case '+':
 					res = Number(operand1) + Number(operand2);
@@ -65,10 +65,10 @@ function App() {
 		</button>
 	));
 
-	const isOperand1 = operand1 !== '' ? operand1 : '';
-	const isOperand2 = operand2 !== '' ? operand2 : '';
-	const isOperator = operator !== '' ? operator : '';
-	const isResult = result !== '' ? result : '';
+	const isOperand1 = operand1 || '';
+	const isOperand2 = operand2 || '';
+	const isOperator = operator || '';
+	const isResult = result || '';
 
 	return (
 		<>

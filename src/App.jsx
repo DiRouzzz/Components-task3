@@ -74,9 +74,7 @@ function App() {
 		<>
 			<div className={styles.calculator}>
 				<p id={styles.display} className={isResult ? styles.result : ''}>
-					{isResult
-						? result
-						: `${isOperand1}` + `${isOperator}` + `${isOperand2}`}
+					{isResult ? result : isOperand1 + isOperator + isOperand2}
 				</p>
 				<div className={styles.buttons}>
 					<button className={styles.operator} onClick={onClickOperator}>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './index.module.css';
 
 const NUMS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+const OPERATORS = ['+', '-'];
 
 function App() {
 	const [operand1, setOperand1] = useState('');
@@ -9,9 +10,7 @@ function App() {
 	const [operator, setOperator] = useState('');
 	const [result, setResult] = useState('');
 
-	const onClickNum = event => {
-		const num = event.target.textContent;
-
+	const onClickNum = num => {
 		if (!operator) {
 			setOperand1(prevNum => prevNum + num);
 		} else {
@@ -19,11 +18,18 @@ function App() {
 		}
 	};
 
-	const onClickOperator = event => {
+	const onClickOperator = oper => {
 		setResult('');
-		const oper = event.target.textContent;
+		if(operator){
+			return;
+		}
+		if(!operand1){
+			return;
+		}
 		if (!operator) {
 			setOperator(oper);
+			
+			
 		}
 	};
 
@@ -60,8 +66,17 @@ function App() {
 	};
 
 	const buttons = NUMS.map(num => (
-		<button onClick={onClickNum} key={num}>
+		<button onClick={() => onClickNum(num)} key={num}>
 			{num}
+		</button>
+	));
+
+	const operators = OPERATORS.map(item => (
+		<button
+			className={styles.operator}
+			key={item}
+			onClick={() => onClickOperator(item)}>
+			{item}
 		</button>
 	));
 
@@ -77,12 +92,7 @@ function App() {
 					{isResult ? result : isOperand1 + isOperator + isOperand2}
 				</p>
 				<div className={styles.buttons}>
-					<button className={styles.operator} onClick={onClickOperator}>
-						+
-					</button>
-					<button className={styles.operator} onClick={onClickOperator}>
-						-
-					</button>
+					{operators}
 					<button className={styles.operator} onClick={onClickClear}>
 						C
 					</button>
